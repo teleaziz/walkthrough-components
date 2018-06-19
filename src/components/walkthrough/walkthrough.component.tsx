@@ -1,4 +1,4 @@
-import { Component, Prop, State, Watch, Event, EventEmitter } from '@stencil/core';
+import { Component, Prop, State, Event, EventEmitter, Method } from '@stencil/core';
 import { IntroJs, Options } from 'intro.js';
 
 @Component({
@@ -18,8 +18,6 @@ export class WalkthroughComponent {
 
   onScriptLoad() {
     this.intro = introJs()
-    this.intro.setOptions(this.options)
-    this.onShow(this.show)
     this.events
     .forEach(eventName => this.intro[`on${eventName}`](this.emitEvent.bind(this, eventName)))
 
@@ -29,15 +27,18 @@ export class WalkthroughComponent {
     this.introEvent.emit(name)
   }
 
-  @Watch('show')
-  onShow(newVal) {
-    if (!this.intro) {
-      return
-    }
-
-    if (newVal) {
+  @Method()
+  start(options= this.options) {
+    if (this.intro) {
+      this.intro.setOptions(options)
       this.intro.start()
-    } else {
+    }
+  }
+
+
+  @Method()
+  stop() {
+    if (this.intro) {
       this.intro.exit()
     }
   }

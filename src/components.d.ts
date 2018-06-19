@@ -72,6 +72,8 @@ declare global {
     interface LkWalkthrough {
       'options': Options;
       'show': boolean;
+      'start': (options?: Options) => void;
+      'stop': () => void;
     }
   }
 
@@ -107,6 +109,7 @@ declare global {
   namespace StencilComponents {
     interface LkWalkthroughCreator {
       'contentId': string;
+      'init': (steps: any) => void;
       'split': boolean;
     }
   }

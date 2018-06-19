@@ -20,7 +20,9 @@
   "dependencies": {
     "@ionic/core": "4.0.0-alpha.7",
     "@medv/finder": "1.0.3",
-    "@types/intro.js": "2.4.3"
+    "@types/intro.js": "2.4.3",
+    "@types/lodash": "^4.14.110",
+    "lodash": "4.17.10"
   },
   "devDependencies": {
     "@stencil/core": "^0.9.7",

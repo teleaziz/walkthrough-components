@@ -1,5 +1,28 @@
+.menu-buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-button {
+    width: 50%;
+
+    button {
+      width: 100%
+    }
+  }
+}
+
+.item-md {
+  padding-left: 6px;
+}
+
 .focus {
+  background-color: gainsboro;
   *:hover {
-    border: 1px solid #d0d0d0;  
+    border: 1px solid #d0d0d0;
+  }
+  .selected-for-step {
+    background-color: white;
   }
 }
