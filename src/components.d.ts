@@ -70,8 +70,8 @@ declare global {
 
   namespace StencilComponents {
     interface LkWalkthrough {
+      'modern': boolean;
       'options': Options;
-      'show': boolean;
       'start': (options?: Options) => void;
       'stop': () => void;
     }
@@ -96,9 +96,9 @@ declare global {
   }
   namespace JSXElements {
     export interface LkWalkthroughAttributes extends HTMLAttributes {
+      'modern'?: boolean;
       'onIntroEvent'?: (event: CustomEvent) => void;
       'options'?: Options;
-      'show'?: boolean;
     }
   }
 }

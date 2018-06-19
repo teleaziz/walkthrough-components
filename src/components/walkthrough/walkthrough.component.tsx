@@ -8,7 +8,7 @@ import { IntroJs, Options } from 'intro.js';
 })
 export class WalkthroughComponent {
 
-  @Prop() show: boolean
+  @Prop() modern: boolean
   @Prop() options: Options
   @Event() introEvent: EventEmitter
 
@@ -47,6 +47,7 @@ export class WalkthroughComponent {
     return (
       <section>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@2.9.3/introjs.min.css" type="text/css"/>
+        { this.modern && <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@2.9.3/themes/introjs-modern.css" type="text/css"/>}
         <script
           onLoad={() => this.onScriptLoad()}
           crossorigin="" src="https://cdn.jsdelivr.net/npm/intro.js@2.9.3/intro.min.js"></script>
