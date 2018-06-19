@@ -88,7 +88,10 @@ export class WalkthroughCreatorComponent {
   }
 
   done() {
-    this.update.emit(this.items.filter((item) => item.isSaved))
+    const savedItems = this.items.filter((item) => item.isSaved)
+    if (savedItems.length) {
+      this.update.emit(savedItems)
+    }
   }
 
   onFocusItem(item) {
@@ -135,7 +138,6 @@ export class WalkthroughCreatorComponent {
                     <ion-label  position="stacked">Intro</ion-label>
                     <ion-input
                       clearInput
-                      readonly={this.isSaved(item)}
                       type="text"
                       placeholder="Add <em>Intro</em>"
                       onChange={ev => this.updateIntro(ev, item)}
