@@ -12,7 +12,7 @@ export interface ExtendedStep extends Step {
 @Component({
   tag: 'lk-walkthrough-creator',
   styleUrl: 'walkthrough_creator.component.scss',
-  shadow: false
+  shadow: true
 })
 
 export class WalkthroughCreatorComponent {
