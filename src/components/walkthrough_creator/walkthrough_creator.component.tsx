@@ -1,8 +1,10 @@
 import { Component, Prop, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
 import '@ionic/core'
-import finder from '@medv/finder'
+import './css-selector'
 import { Step } from 'intro.js'
 // import { reorderArray } from '@ionic/core'
+declare var CssSelectorGenerator: any
+const finder = new CssSelectorGenerator
 
 export interface ExtendedStep extends Step {
   isInFocus?: boolean;
@@ -12,7 +14,7 @@ export interface ExtendedStep extends Step {
 @Component({
   tag: 'lk-walkthrough-creator',
   styleUrl: 'walkthrough_creator.component.scss',
-  shadow: true
+  shadow: false
 })
 
 export class WalkthroughCreatorComponent {
@@ -38,7 +40,7 @@ export class WalkthroughCreatorComponent {
       this.itemToChooseElementFor = this.items[0]
     }
     const element = event.target as HTMLElement
-    this.itemToChooseElementFor.element = finder(element)
+    this.itemToChooseElementFor.element = finder.getSelector(element)
     element.classList.add('selected-for-step')
     if (this.elementInFocus) {
       this.elementInFocus.classList.remove('selected-for-step')
