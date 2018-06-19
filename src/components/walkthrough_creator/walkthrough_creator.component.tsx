@@ -20,7 +20,7 @@ export interface ExtendedStep extends Step {
 export class WalkthroughCreatorComponent {
   @Prop() contentId: string
   @Prop({mutable: true}) split = false
-  @State() when = 'xl' ;
+  @State() when = 'never' ;
   @State() items: ExtendedStep[] = []
   @Event() update: EventEmitter
 
