@@ -13,9 +13,12 @@ declare global {
   }
   namespace JSXElements {}
 
+  interface HTMLElement {
+    componentOnReady?: () => Promise<this | null>;
+  }
+
   interface HTMLStencilElement extends HTMLElement {
     componentOnReady(): Promise<this>;
-    componentOnReady(done: (ele?: this) => void): void;
 
     forceUpdate(): void;
   }
@@ -23,37 +26,113 @@ declare global {
   interface HTMLAttributes {}
 }
 
+import '@ionic/core';
+import 'ionicons';
+
+import {
+  Options,
+} from 'intro.js';
 
 declare global {
 
   namespace StencilComponents {
-    interface MyComponent {
-      'first': string;
-      'last': string;
+    interface LkPlayground {
+
     }
   }
 
-  interface HTMLMyComponentElement extends StencilComponents.MyComponent, HTMLStencilElement {}
+  interface HTMLLkPlaygroundElement extends StencilComponents.LkPlayground, HTMLStencilElement {}
 
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  var HTMLLkPlaygroundElement: {
+    prototype: HTMLLkPlaygroundElement;
+    new (): HTMLLkPlaygroundElement;
   };
   interface HTMLElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'lk-playground': HTMLLkPlaygroundElement;
   }
   interface ElementTagNameMap {
-    'my-component': HTMLMyComponentElement;
+    'lk-playground': HTMLLkPlaygroundElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      'my-component': JSXElements.MyComponentAttributes;
+      'lk-playground': JSXElements.LkPlaygroundAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
-      'first'?: string;
-      'last'?: string;
+    export interface LkPlaygroundAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface LkWalkthrough {
+      'options': Options;
+      'show': boolean;
+    }
+  }
+
+  interface HTMLLkWalkthroughElement extends StencilComponents.LkWalkthrough, HTMLStencilElement {}
+
+  var HTMLLkWalkthroughElement: {
+    prototype: HTMLLkWalkthroughElement;
+    new (): HTMLLkWalkthroughElement;
+  };
+  interface HTMLElementTagNameMap {
+    'lk-walkthrough': HTMLLkWalkthroughElement;
+  }
+  interface ElementTagNameMap {
+    'lk-walkthrough': HTMLLkWalkthroughElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'lk-walkthrough': JSXElements.LkWalkthroughAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface LkWalkthroughAttributes extends HTMLAttributes {
+      'onIntroEvent'?: (event: CustomEvent) => void;
+      'options'?: Options;
+      'show'?: boolean;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
+    interface LkWalkthroughCreator {
+      'contentId': string;
+      'split': boolean;
+    }
+  }
+
+  interface HTMLLkWalkthroughCreatorElement extends StencilComponents.LkWalkthroughCreator, HTMLStencilElement {}
+
+  var HTMLLkWalkthroughCreatorElement: {
+    prototype: HTMLLkWalkthroughCreatorElement;
+    new (): HTMLLkWalkthroughCreatorElement;
+  };
+  interface HTMLElementTagNameMap {
+    'lk-walkthrough-creator': HTMLLkWalkthroughCreatorElement;
+  }
+  interface ElementTagNameMap {
+    'lk-walkthrough-creator': HTMLLkWalkthroughCreatorElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'lk-walkthrough-creator': JSXElements.LkWalkthroughCreatorAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface LkWalkthroughCreatorAttributes extends HTMLAttributes {
+      'contentId'?: string;
+      'onUpdate'?: (event: CustomEvent) => void;
+      'split'?: boolean;
     }
   }
 }
