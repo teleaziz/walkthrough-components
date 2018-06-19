@@ -78,6 +78,7 @@ export class PlaygroundComponent {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
       
             <h4>Section Three</h4>
+            <a href="https://example.com">Click Here</a>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
           </div>
       

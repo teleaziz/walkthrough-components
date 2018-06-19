@@ -19,10 +19,18 @@
 
 .focus {
   background-color: gainsboro;
+
+  *:not(.selected-for-step) {
+    background-color: inherit;
+  }
   *:hover {
     border: 1px solid #d0d0d0;
   }
   .selected-for-step {
     background-color: white;
   }
+}
+
+.focused-element {
+  background-color: gainsboro;
 }

@@ -33,7 +33,7 @@ export class WalkthroughCreatorComponent {
   }
 
   onClick(event: UIEvent) {
-    if (!this.items[0]) {
+    if (!this.items[0] || !this.split) {
       return
     }
     if (!this.itemToChooseElementFor) {
@@ -42,11 +42,11 @@ export class WalkthroughCreatorComponent {
     const element = event.target as HTMLElement
     this.itemToChooseElementFor.element = finder.getSelector(element)
     element.classList.add('selected-for-step')
+    event.preventDefault()
     if (this.elementInFocus) {
       this.elementInFocus.classList.remove('selected-for-step')
     }
     this.elementInFocus = element
-    this.itemToChooseElementFor = null
   }
 
   addStep() {
@@ -132,7 +132,7 @@ export class WalkthroughCreatorComponent {
               this.items.map((item, index) => (
                   <ion-item-group>
                     <ion-item>
-                    <ion-label position="stacked">Intro</ion-label>
+                    <ion-label  position="stacked">Intro</ion-label>
                     <ion-input
                       clearInput
                       readonly={this.isSaved(item)}
@@ -147,7 +147,7 @@ export class WalkthroughCreatorComponent {
                     </ion-item>
                     { item.element &&
                       <ion-item>
-                        <ion-label>Attached to element</ion-label>
+                        <ion-label class={item === this.itemToChooseElementFor ? 'focused-element': ''}>Attached to element</ion-label>
                         <ion-checkbox checked onChange={() => this.removeElement(item)}></ion-checkbox>
                       </ion-item>
                   
