@@ -44,7 +44,6 @@ export class WalkthroughComponent {
   }
 
   render() {
-    console.log('here', this.options)
     return (
       <section>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@2.9.3/introjs.min.css" type="text/css"/>

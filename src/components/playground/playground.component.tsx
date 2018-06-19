@@ -54,7 +54,6 @@ export class PlaygroundComponent {
         steps: (event as any).detail
       }
     }
-    console.log('starting')
     this.tour.start()
   }
 

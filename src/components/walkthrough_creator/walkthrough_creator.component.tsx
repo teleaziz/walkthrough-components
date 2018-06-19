@@ -118,7 +118,7 @@ export class WalkthroughCreatorComponent {
       <section onClick={(ev) => this.onClick(ev)} class={this.split ? 'focus' : ''} main id="split">
         <slot name="split-content"></slot>
       </section>
-      <ion-menu type="push" contentId="split">
+      <ion-menu type="push">
         <ion-header>
           <ion-toolbar>
             <ion-title>Walkthrough Creator</ion-title>
