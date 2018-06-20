@@ -30,6 +30,7 @@ import '@ionic/core';
 import 'ionicons';
 
 import {
+  IntroJs,
   Options,
 } from 'intro.js';
 
@@ -70,6 +71,7 @@ declare global {
 
   namespace StencilComponents {
     interface LkWalkthrough {
+      'intro': IntroJs;
       'modern': boolean;
       'options': Options;
       'start': (options?: Options) => void;
@@ -96,8 +98,10 @@ declare global {
   }
   namespace JSXElements {
     export interface LkWalkthroughAttributes extends HTMLAttributes {
+      'intro'?: IntroJs;
       'modern'?: boolean;
       'onIntroEvent'?: (event: CustomEvent) => void;
+      'onReady'?: (event: CustomEvent) => void;
       'options'?: Options;
     }
   }
@@ -110,7 +114,7 @@ declare global {
     interface LkWalkthroughCreator {
       'contentId': string;
       'init': (steps: any) => void;
-      'split': boolean;
+      'menu': any;
     }
   }
 
@@ -134,8 +138,8 @@ declare global {
   namespace JSXElements {
     export interface LkWalkthroughCreatorAttributes extends HTMLAttributes {
       'contentId'?: string;
+      'menu'?: any;
       'onUpdate'?: (event: CustomEvent) => void;
-      'split'?: boolean;
     }
   }
 }

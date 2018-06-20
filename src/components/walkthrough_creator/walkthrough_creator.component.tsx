@@ -1,4 +1,4 @@
-import { Component, Prop, Watch, State, Event, EventEmitter, Method } from '@stencil/core';
+import { Component, Prop, State, Event, EventEmitter, Method, Listen } from '@stencil/core';
 import '@ionic/core'
 import './css-selector'
 import { Step } from 'intro.js'
@@ -6,10 +6,6 @@ import { Step } from 'intro.js'
 declare var CssSelectorGenerator: any
 const finder = new CssSelectorGenerator
 
-export interface ExtendedStep extends Step {
-  isInFocus?: boolean;
-  isSaved?: boolean;
-}
 
 @Component({
   tag: 'lk-walkthrough-creator',
@@ -19,21 +15,18 @@ export interface ExtendedStep extends Step {
 
 export class WalkthroughCreatorComponent {
   @Prop() contentId: string
-  @Prop({mutable: true}) split = false
-  @State() when = '' ;
-  @State() items: ExtendedStep[] = []
+  @Prop({mutable: true}) menu: any
   @Event() update: EventEmitter
 
+  @State() items: Step[] = []
   @State() itemToChooseElementFor: Step
   @State() elementInFocus: HTMLElement
 
-  @Watch('split')
-  splitChanged(split) {
-    this.when = split ? 'xs' : 'never'
-  }
+  private activeElement: HTMLElement
 
-  onClick(event: UIEvent) {
-    if (!this.items[0] || !this.split) {
+  @Listen('body:contextmenu')
+  onClick(event) {
+    if (!this.items[0] || !this.menu.isOpen()) {
       return
     }
     if (!this.itemToChooseElementFor) {
@@ -43,10 +36,14 @@ export class WalkthroughCreatorComponent {
     this.itemToChooseElementFor.element = finder.getSelector(element)
     element.classList.add('selected-for-step')
     event.preventDefault()
+    event.stopPropagation()
     if (this.elementInFocus) {
       this.elementInFocus.classList.remove('selected-for-step')
     }
     this.elementInFocus = element
+    if (this.activeElement) {
+      this.activeElement.focus()
+    }
   }
 
   addStep() {
@@ -67,34 +64,24 @@ export class WalkthroughCreatorComponent {
     ]
   }
 
-  saveStep(step: ExtendedStep) {
-    step.isSaved = true
-  }
-
-  isSaved(item: ExtendedStep) {
-    return item.isSaved
-  }
-
   updateIntro(event, item) {
     item.intro = event.target.value
   }
 
   @Method()
   init(steps: any) {
-    this.items = steps.map(step => ({
-      ...step,
-      isSaved: true
-    }))
+    this.items = steps.slice(0)
   }
 
   done() {
-    const savedItems = this.items.filter((item) => item.isSaved)
+    const savedItems = this.items.filter((item) => item.intro)
     if (savedItems.length) {
       this.update.emit(savedItems)
     }
   }
 
-  onFocusItem(item) {
+  onFocusItem(item, event) {
+    this.activeElement = event.target
     this.itemToChooseElementFor = item
     if (this.elementInFocus) {
       this.elementInFocus.classList.remove('selected-for-step')
@@ -108,7 +95,7 @@ export class WalkthroughCreatorComponent {
     }
   }
 
-  removeElement(item: ExtendedStep) {
+  removeElement(item: Step) {
     const element = document.querySelector(item.element as string)
     if (element) {
       element.classList.remove('selected-for-step')
@@ -117,13 +104,14 @@ export class WalkthroughCreatorComponent {
     delete this.elementInFocus
   }
 
+  updateMenuRef(el: any) {
+    this.menu = el
+  }
+
   render() {
     return (
-    <ion-split-pane when={this.when}>
-      <section onClick={(ev) => this.onClick(ev)} class={this.split ? 'focus' : ''} main id="split">
-        <slot name="split-content"></slot>
-      </section>
-      <ion-menu type="push">
+    <section>
+      <ion-menu contentId={this.contentId} ref={this.updateMenuRef.bind(this)} type="push">
         <ion-header>
           <ion-toolbar>
             <ion-title>Walkthrough Creator</ion-title>
@@ -133,32 +121,32 @@ export class WalkthroughCreatorComponent {
         <ion-list>
             {
               this.items.map((item, index) => (
-                  <ion-item-group>
+                  <ion-card class={item === this.itemToChooseElementFor ? 'focused-element': ''}>
                     <ion-item>
-                    <ion-label  position="stacked">Intro</ion-label>
-                    <ion-input
-                      clearInput
-                      type="text"
-                      placeholder="Add <em>Intro</em>"
-                      onChange={ev => this.updateIntro(ev, item)}
-                      onFocus={() => this.onFocusItem(item)}
-                      onClick={() => this.onFocusItem(item)}
-                      onBlur={() => this.saveStep(item)}
-                      value={item.intro}>
-                    </ion-input>
+                      <ion-label  position="stacked">Intro</ion-label>
+                      <ion-input
+                        clearInput
+                        type="text"
+                        placeholder="Add <em>Intro</em>"
+                        onChange={ev => this.updateIntro(ev, item)}
+                        onFocus={(ev) => this.onFocusItem(item, ev)}
+                        onClick={(ev) => this.onFocusItem(item, ev)}
+                        value={item.intro}>
+                      </ion-input>
                     </ion-item>
                     { item.element &&
                       <ion-item>
-                        <ion-label class={item === this.itemToChooseElementFor ? 'focused-element': ''}>Attached to element</ion-label>
+                        <ion-label>Attached to element</ion-label>
                         <ion-checkbox checked onChange={() => this.removeElement(item)}></ion-checkbox>
                       </ion-item>
                   
                     }
-                    <div class="menu-buttons">
-                      <ion-button expand="full" color="danger" onClick={() => this.removeStep(index)}>remove</ion-button>
-                      <ion-button expand="full" onClick={() => this.saveStep(item)}>save</ion-button>
-                    </div>
-                  </ion-item-group>
+                  <div class="delete-button">
+                      <ion-button onClick={() => this.removeStep(index)} fill="clear" color="danger"  size="small">
+                        X
+                      </ion-button>
+                  </div>
+                </ion-card>
                 ))
             }
         </ion-list>
@@ -169,7 +157,7 @@ export class WalkthroughCreatorComponent {
         </div>
       </ion-menu>
 
-    </ion-split-pane>
+    </section>
     );
   }
 }

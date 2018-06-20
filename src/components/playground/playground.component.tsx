@@ -11,7 +11,7 @@ export class PlaygroundComponent {
    componentDidLoad() {
     this.creator.init([
         { 
-          intro: "Hello world!"
+          intro: "Hit Ctrl on any element on the right to attach this step to it"
         },
         { 
           intro: "You <b>don't need</b> to define element to focus, this is a floating tooltip."
@@ -26,16 +26,6 @@ export class PlaygroundComponent {
           position: 'right'
         },
         {
-          element: '#step3',
-          intro: 'More features, more fun.',
-          position: 'left'
-        },
-        {
-          element: '#step4',
-          intro: "Another step.",
-          position: 'bottom'
-        },
-        {
           element: '#step5',
           intro: 'Get it, use it.'
         }
@@ -45,7 +35,7 @@ export class PlaygroundComponent {
   @State() split = false
 
   toggleMenu() {
-    this.split = !this.split
+    this.creator.menu.open()
   }
 
   update(ev: any) {
@@ -60,43 +50,45 @@ export class PlaygroundComponent {
   render() {
 
     return (
-      <lk-walkthrough-creator ref={el => this.creator = el} onUpdate={ev => this.update(ev)} split={this.split}>
-        <div slot="split-content">
-        <div>
-          <h1 id="step1">Without Element</h1>
-          <p id="step4" class="lead">This example shows the introductions without focusing on elements.</p>
-        </div>  
-        <div>
-          <ion-button onClick={() => this.toggleMenu()}>
-            Toggle
-          </ion-button>
-          <div id="step2" class="span6">
-            <h4>Section One</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
-      
-            <h4>Section Two</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
-      
-            <h4>Section Three</h4>
-            <a href="https://example.com">Click Here</a>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
+      <section>
+        <lk-walkthrough-creator
+          onUpdate={this.update.bind(this)}
+          contentId="main" ref={el => this.creator = el}></lk-walkthrough-creator>
+        <div id="main">
+          <div>
+            <h1 id="step1">Without Element</h1>
+            <p id="step4" class="lead">This example shows the introduction.</p>
+          </div>  
+          <div>
+            <ion-button onClick={() => this.toggleMenu()}>
+              Toggle
+            </ion-button>
+            <div id="step2" class="span6">
+              <h4>Section One</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
+        
+              <h4>Section Two</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
+        
+              <h4>Section Three</h4>
+              <a href="https://example.com">Click Here</a>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
+            </div>
+            <div id="step3" class="span6">
+              <h4>Section Four</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
+        
+        
+              <h4>Section Five</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
+        
+              <h4>Section Six</h4>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
+            </div>
           </div>
-      
-          <div id="step3" class="span6">
-            <h4>Section Four</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
-      
-      
-            <h4>Section Five</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
-      
-            <h4>Section Six</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis augue a neque cursus ac blandit orci faucibus. Phasellus nec metus purus.</p>
-          </div>
-        </div>
           <lk-walkthrough ref={el => this.tour = el} options={this.options}></lk-walkthrough>
         </div>
-      </lk-walkthrough-creator>
+      </section>
     );
   }
 }

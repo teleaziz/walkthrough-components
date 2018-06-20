@@ -1,7 +1,7 @@
 {
   "name": "walkthrough-component",
   "version": "0.2.6",
-  "description": "Stencil Component Starter",
+  "description": "A walkthrough creator for introJS",
   "module": "dist/esm/index.js",
   "main": "dist/index.js",
   "types": "dist/types/components.d.ts",
