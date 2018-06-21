@@ -7,11 +7,11 @@
 - Put a script tag similar to this `<script src='https://unpkg.com/walkthrough-component@<version>/dist/mycomponent.js'></script>` in the head of your index.html
 - Then you can use the element anywhere in your template, JSX, html etc
 - usage :
-```
+```html
  <lk-walkthrough-creator contentId="myContentId"></lk-walkthrough-creator>
 ```
 where contentId is the id of the element containing your app
-```
+```typescript
 const walkthroughCreatorElement = document.querySelector('lk-walkthrough-creator')
 walkthroughCreatorElement.addEventListener('update', (ev) => {
     // an array of configured steps will be emitted on event.detail
